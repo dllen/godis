@@ -14,7 +14,6 @@ func NewPooledObject(addr string, client *redis.Client) *PooledObject {
 		Addr:   addr,
 		Client: client,
 	}
-
 	return pooledObject
 }
 

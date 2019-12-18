@@ -9,7 +9,7 @@ import (
 )
 
 // RoundRobinPool is a round-robin redis client pool for connecting multiple codis proxies based on
-// zookeeper-go and redis-go.
+// redis-go.
 type RoundRobinPool struct {
 	pools   atomic.Value
 	hosts   []string
@@ -42,17 +42,12 @@ func (p *RoundRobinPool) ResetPools(hosts []string) {
 	for _, host := range hosts {
 		proxyInfo := internal.ProxyInfo{
 			Addr:  host,
-			State: "online",
-		}
-		if proxyInfo.State != "online" {
-			continue
 		}
 		addr := proxyInfo.Addr
 		if pooledObject, ok := addr2Pool[addr]; ok {
 			newPools = append(newPools, pooledObject)
 			delete(addr2Pool, addr)
 		} else {
-
 			options := p.cloneOptions()
 			options.Addr = addr
 			options.Network = "tcp"
