@@ -2,6 +2,10 @@
 
 ## Godis - Golang client for codis
 
+codis 架构图
+
+![architecture](https://raw.githubusercontent.com/CodisLabs/codis/release3.2/doc/pictures/architecture.png)
+
 支持功能列表:
 
 - 动态添加hosts
