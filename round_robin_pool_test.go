@@ -65,7 +65,7 @@ func Test(t *testing.T) {
 }
 
 func BenchmarkNewRoundRobinPool(b *testing.B) {
-	b.N = 500
+	b.N = 1000
 	var hosts []string
 	options := redis.Options{
 		DB: 0,
