@@ -58,3 +58,34 @@ func main() {
 	wg.Wait()
 }
 ```
+
+## 备注
+`github.com/go-redis/redis` 
+client 已经有连接池，我们只需要保证请求能均衡的负载到hosts就行
+```go
+// Client is a Redis client representing a pool of zero or more
+// underlying connections. It's safe for concurrent use by multiple
+// goroutines.
+type Client struct {
+	baseClient
+	cmdable
+
+	ctx context.Context
+}
+
+// NewClient returns a client to the Redis Server specified by Options.
+func NewClient(opt *Options) *Client {
+	opt.init()
+
+	c := Client{
+		baseClient: baseClient{
+			opt:      opt,
+			connPool: newConnPool(opt),
+		},
+	}
+	c.baseClient.init()
+	c.init()
+
+	return &c
+}
+```
