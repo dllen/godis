@@ -24,6 +24,7 @@ func NewRoundRobinPool(hosts []string, options redis.Options) (*RoundRobinPool, 
 		nextIdx: -1,
 		pools:   atomic.Value{},
 		hosts:   hosts,
+		options: options,
 	}
 	pool.pools.Store([]*internal.PooledObject{})
 	pool.ResetPools(hosts)
@@ -112,7 +113,7 @@ func (p *RoundRobinPool) cloneOptions() redis.Options {
 	return options
 }
 
-// Close closes the pool, releasing all resources except zookeeper client.
+// Close closes the pool, releasing all resources
 func (p *RoundRobinPool) Close() {
 	pools := p.pools.Load().([]*internal.PooledObject)
 	for _, pool := range pools {
