@@ -1,6 +1,6 @@
 # godis
 
-##Godis - Golang client for codis
+## Godis - Golang client for codis
 
 支持功能列表:
 
