@@ -41,7 +41,7 @@ func (p *RoundRobinPool) ResetPools(hosts []string) {
 	newPools := make([]*internal.PooledObject, 0)
 	for _, host := range hosts {
 		proxyInfo := internal.ProxyInfo{
-			Addr:  host,
+			Addr: host,
 		}
 		addr := proxyInfo.Addr
 		if pooledObject, ok := addr2Pool[addr]; ok {
@@ -77,7 +77,6 @@ func (p *RoundRobinPool) GetClient() *redis.Client {
 	pools := p.pools.Load().([]*internal.PooledObject)
 	for {
 		current := atomic.LoadInt64(&p.nextIdx)
-
 		var next int64
 		if (current) >= (int64)(len(pools))-1 {
 			next = 0
@@ -117,7 +116,7 @@ func (p *RoundRobinPool) cloneOptions() redis.Options {
 func (p *RoundRobinPool) Close() {
 	pools := p.pools.Load().([]*internal.PooledObject)
 	for _, pool := range pools {
-		err:=pool.Client.Close()
+		err := pool.Client.Close()
 		if err != nil {
 			log.Printf("Client close err: %v", err)
 		}
